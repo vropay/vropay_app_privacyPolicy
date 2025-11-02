@@ -30,7 +30,7 @@ function PDFViewer() {
             const page = await pdf.getPage(i)
             const textContent = await page.getTextContent()
             const pageText = textContent.items
-              .map((item: any) => item.str)
+              .map((item) => ('str' in item ? item.str : ''))
               .join(' ')
             allText.push(pageText)
           } catch (err) {
@@ -41,8 +41,9 @@ function PDFViewer() {
         
         setTextContent(allText)
         setLoading(false)
-      } catch (err: any) {
-        setError('Failed to load PDF. ' + (err?.message || 'Unknown error'))
+      } catch (err) {
+        const errorMessage = err instanceof Error ? err.message : 'Unknown error'
+        setError('Failed to load PDF. ' + errorMessage)
         setLoading(false)
       }
     }
