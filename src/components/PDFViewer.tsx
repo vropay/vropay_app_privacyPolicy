@@ -6,7 +6,6 @@ import './PDFViewer.css'
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`
 
 function PDFViewer() {
-  const [numPages, setNumPages] = useState<number>(0)
   const [loading, setLoading] = useState<boolean>(true)
   const [error, setError] = useState<string | null>(null)
   const [textContent, setTextContent] = useState<string[]>([])
@@ -22,7 +21,6 @@ function PDFViewer() {
         const pdf = await loadingTask.promise
         
         const pageCount = pdf.numPages
-        setNumPages(pageCount)
         
         // Extract text from all pages
         const allText: string[] = []
